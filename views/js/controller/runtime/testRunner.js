@@ -876,8 +876,14 @@ function (
              * Updates the test informations
              */
             updateContext: function () {
-
-                $controls.$title.text(this.testContext.testTitle);
+                
+                //HOTFIX to remove the grade name for EOC tests
+                var title = this.testContext.testTitle || '';
+                title = title.replace(/(.*)(End\sof\scourse\s+)-\s+Grade\s[0-9]+\s+-(.*)/, function($0, $1, $2, $3){
+                    return $1+$2+'-'+$3;
+                });
+                    
+                $controls.$title.text(title);
 
                 // Visibility of section?
                 var sectionText = (this.testContext.isDeepestSectionVisible === true) ? (' - ' + this.testContext.sectionTitle) : '';
